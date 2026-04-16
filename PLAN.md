@@ -13,7 +13,7 @@ Deploy:      Vercel (free)
 - [x] Initialize Vite + React + TS project
 - [x] Configure TailwindCSS
 - [x] Create Supabase project
-- [ ] Configure Vercel with automatic CI/CD
+- [x] Configure Vercel with automatic CI/CD
 - [x] Setup ESLint + Prettier
 ### Phase 1.5: Design with Google Stitch
 - [ ] Create project in Google Stitch
