@@ -28,11 +28,11 @@ Deploy:      Vercel (free)
 - [x] Review and export assets
 ### Phase 2: Core - Registration & Auth
 - [x] Database schema (users, profiles tables)
-- [ ] Auth system (email + Google OAuth)
-- [ ] Hook useAuth
-- [ ] Registration page
-- [ ] Login page
-- [ ] Route protection
+- [x] Auth system (email + Google OAuth)
+- [x] Hook useAuth
+- [x] Registration page
+- [x] Login page
+- [x] Route protection
 ### Phase 3: Interactive Map
 - [ ] LeafletMap component
 - [ ] Marker clustering
