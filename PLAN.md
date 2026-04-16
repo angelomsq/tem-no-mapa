@@ -24,8 +24,8 @@ Deploy:      Vercel (free)
 - [x] Generate screen: Main Map
 - [x] Generate screen: User Profile
 - [x] Generate screen: Admin Dashboard
-- [ ] Apply design system to screens
-- [ ] Review and export assets
+- [x] Apply design system to screens
+- [x] Review and export assets
 ### Phase 2: Core - Registration & Auth
 - [ ] Database schema (users, profiles tables)
 - [ ] Auth system (email + Google OAuth)
