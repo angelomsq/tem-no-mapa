@@ -27,7 +27,7 @@ Deploy:      Vercel (free)
 - [x] Apply design system to screens
 - [x] Review and export assets
 ### Phase 2: Core - Registration & Auth
-- [ ] Database schema (users, profiles tables)
+- [x] Database schema (users, profiles tables)
 - [ ] Auth system (email + Google OAuth)
 - [ ] Hook useAuth
 - [ ] Registration page
