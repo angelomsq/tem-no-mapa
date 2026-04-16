@@ -9,12 +9,12 @@ Deploy:      Vercel (free)
 ---
 ## Development Phases
 ### Phase 1: Setup & Infrastructure
-- [ ] Create GitHub repository
-- [ ] Initialize Vite + React + TS project
-- [ ] Configure TailwindCSS
-- [ ] Create Supabase project
+- [x] Create GitHub repository
+- [x] Initialize Vite + React + TS project
+- [x] Configure TailwindCSS
+- [x] Create Supabase project
 - [ ] Configure Vercel with automatic CI/CD
-- [ ] Setup ESLint + Prettier
+- [x] Setup ESLint + Prettier
 ### Phase 1.5: Design with Google Stitch
 - [ ] Create project in Google Stitch
 - [ ] Define design system (colors, typography, spacing)
