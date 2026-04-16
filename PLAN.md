@@ -16,14 +16,14 @@ Deploy:      Vercel (free)
 - [x] Configure Vercel with automatic CI/CD
 - [x] Setup ESLint + Prettier
 ### Phase 1.5: Design with Google Stitch
-- [ ] Create project in Google Stitch
-- [ ] Define design system (colors, typography, spacing)
-- [ ] Generate screen: Landing Page
-- [ ] Generate screen: Login
-- [ ] Generate screen: Register
-- [ ] Generate screen: Main Map
-- [ ] Generate screen: User Profile
-- [ ] Generate screen: Admin Dashboard
+- [x] Create project in Google Stitch
+- [x] Define design system (colors, typography, spacing)
+- [x] Generate screen: Landing Page
+- [x] Generate screen: Login
+- [x] Generate screen: Register
+- [x] Generate screen: Main Map
+- [x] Generate screen: User Profile
+- [x] Generate screen: Admin Dashboard
 - [ ] Apply design system to screens
 - [ ] Review and export assets
 ### Phase 2: Core - Registration & Auth

@@ -1,0 +1,24 @@
+{
+  "name": "projects/16839229713363977811",
+  "projectId": "16839229713363977811",
+  "title": "Tem no Mapa",
+  "visibility": "PRIVATE",
+  "designTheme": {
+    "colorMode": "LIGHT",
+    "font": "PLUS_JAKARTA_SANS",
+    "roundness": "ROUND_EIGHT",
+    "customColor": "#009C3B"
+  },
+  "deviceType": "DESKTOP",
+  "screens": {
+    "landing": {
+      "id": "2af300a9788c461d8b3d34825ba8b4d4"
+    },
+    "login": {
+      "id": "5208b9f66bcf4f3f9340343038c2307e"
+    },
+    "register": {
+      "id": "34a5dde220c64f65b357d4d508082e3a"
+    }
+  }
+}
