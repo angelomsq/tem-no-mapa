@@ -53,6 +53,7 @@ export default function Map() {
     { to: '/invite', label: 'Convidar' },
     { to: '/verification', label: 'Verificação' },
     { to: '/profile', label: 'Perfil' },
+    ...(profile?.role === 'admin' ? [{ to: '/admin', label: 'Admin' }] : []),
   ]
 
   return (

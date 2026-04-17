@@ -13,6 +13,7 @@ interface Profile {
   country: string | null
   is_verified: boolean
   is_ambassador: boolean
+  role: string
   created_at?: string
 }
 
