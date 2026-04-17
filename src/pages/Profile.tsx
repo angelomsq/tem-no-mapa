@@ -102,6 +102,7 @@ export default function Profile() {
           <nav className="flex items-center gap-6">
             <Link to="/map" className="text-sm font-medium text-[#6b7280] hover:text-[#1c1b1b]">Mapa</Link>
             <Link to="/achievements" className="text-sm font-medium text-[#6b7280] hover:text-[#1c1b1b]">Conquistas</Link>
+            <Link to="/missions" className="text-sm font-medium text-[#6b7280] hover:text-[#1c1b1b]">Missões</Link>
             <Link to="/rankings" className="text-sm font-medium text-[#6b7280] hover:text-[#1c1b1b]">Ranking</Link>
             <Link to="/profile" className="text-sm font-medium text-[#009C3B]">Perfil</Link>
           </nav>

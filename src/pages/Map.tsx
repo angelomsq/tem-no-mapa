@@ -20,6 +20,7 @@ export default function Map() {
   const navigate = useNavigate()
   const [locations, setLocations] = useState<Location[]>([])
   const [filter, setFilter] = useState<string>('')
+  const [showHeatmap, setShowHeatmap] = useState(false)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -95,11 +96,20 @@ export default function Map() {
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#009C3B]"></div>
           </div>
         ) : (
-          <LeafletMap
-            locations={locations}
-            selectedState={filter}
-            onStateSelect={setFilter}
-          />
+          <div className="relative">
+            <LeafletMap
+              locations={locations}
+              selectedState={filter}
+              onStateSelect={setFilter}
+              showHeatmap={showHeatmap}
+            />
+            <button
+              onClick={() => setShowHeatmap(!showHeatmap)}
+              className="absolute top-4 right-4 z-[1000] px-4 py-2 bg-white rounded-lg shadow-md text-sm font-medium"
+            >
+              {showHeatmap ? 'Mostrar Pinos' : 'Mostrar Calor'}
+            </button>
+          </div>
         )}
       </main>
     </div>

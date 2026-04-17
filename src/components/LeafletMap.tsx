@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, Circle, Popup, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import { ESTADOS } from '@/types'
 import 'leaflet/dist/leaflet.css'
@@ -35,7 +35,23 @@ interface MapProps {
   locations: Location[]
   selectedState: string
   onStateSelect: (state: string) => void
-  dominationMode?: boolean
+  showHeatmap?: boolean
+}
+
+function getHeatmapRadius(count: number): number {
+  if (count <= 0) return 10000
+  if (count <= 4) return 20000
+  if (count <= 14) return 40000
+  if (count <= 29) return 60000
+  return 80000
+}
+
+function getHeatmapColor(count: number): string {
+  if (count <= 0) return '#E8F5E9'
+  if (count <= 4) return '#81C784'
+  if (count <= 14) return '#4CAF50'
+  if (count <= 29) return '#2E7D32'
+  return '#1B5E20'
 }
 
 function MapController({ selectedState }: { selectedState: string }) {
@@ -69,7 +85,7 @@ function MapController({ selectedState }: { selectedState: string }) {
   return null
 }
 
-export default function LeafletMap({ locations, selectedState, onStateSelect }: MapProps) {
+export default function LeafletMap({ locations, selectedState, onStateSelect, showHeatmap }: MapProps) {
   const [mapKey, setMapKey] = useState(0)
 
   useEffect(() => {
@@ -154,28 +170,52 @@ export default function LeafletMap({ locations, selectedState, onStateSelect }: 
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <MapController selectedState={selectedState} />
+<MapController selectedState={selectedState} />
           
-          {locations.map(location => (
-            <Marker
-              key={location.id}
-              position={[location.latitude, location.longitude]}
-            >
-              <Popup>
-                <div className="text-center">
-                  <strong>{location.city}</strong>
-                  <br />
-                  <span className="text-sm text-[#6b6375]">{location.country}</span>
-                  {location.state && (
-                    <>
-                      <br />
-                      <span className="text-sm">Origem: {location.state}</span>
-                    </>
-                  )}
-                </div>
-              </Popup>
-            </Marker>
-          ))}
+          {showHeatmap ? (
+            Object.entries(
+              locations.reduce((acc, loc) => {
+                const key = `${loc.latitude.toFixed(2)},${loc.longitude.toFixed(2)}`
+                acc[key] = (acc[key] || 0) + 1
+                return acc
+              }, {} as Record<string, number>)
+            ).map(([key, count]) => {
+              const [lat, lng] = key.split(',').map(Number)
+              return (
+                <Circle
+                  key={key}
+                  center={[lat, lng]}
+                  radius={getHeatmapRadius(count)}
+                  pathOptions={{
+                    fillColor: getHeatmapColor(count),
+                    fillOpacity: 0.6,
+                    stroke: false,
+                  }}
+                />
+              )
+            })
+          ) : (
+            locations.map(location => (
+              <Marker
+                key={location.id}
+                position={[location.latitude, location.longitude]}
+              >
+                <Popup>
+                  <div className="text-center">
+                    <strong>{location.city}</strong>
+                    <br />
+                    <span className="text-sm text-[#6b6375]">{location.country}</span>
+                    {location.state && (
+                      <>
+                        <br />
+                        <span className="text-sm">Origem: {location.state}</span>
+                      </>
+                    )}
+                  </div>
+                </Popup>
+              </Marker>
+            ))
+          )}
         </MapContainer>
 
         <div className="absolute bottom-6 right-6 glass rounded-lg px-4 py-3 text-sm z-[1000]">

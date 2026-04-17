@@ -36,23 +36,23 @@ Deploy:      Vercel (free)
 ### Phase 3: Interactive Map
 - [x] LeafletMap component
 - [x] Marker clustering
-- [ ] Concentration heatmap
+- [x] Concentration heatmap
 - [ ] State flag pins
 - [x] State filters
 - [ ] Automatic geolocation
 ### Phase 4: Gamification
 - [x] Achievements/badges system
 - [x] Rankings (country, state, city)
-- [ ] Weekly missions
+- [x] Weekly missions
 - [ ] "Domination map" by state
 ### Phase 5: User Profile
 - [x] Profile page
 - [x] Edit profile data
-- [ ] Avatar upload
+- [x] Avatar upload
 - [x] Personal statistics
 
 ### Phase 6: Social & Sharing
-- [ ] Image generation (html2canvas)
+- [x] Image generation (html2canvas)
 - [x] Unique invite link
 - [ ] Referral system
 - [ ] Referral rewards
@@ -61,11 +61,11 @@ Deploy:      Vercel (free)
 - [ ] Anonymous voting system
 - [ ] "Verified Ambassador" badge
 ### Phase 8: Dashboard & Analytics
-- [ ] Admin panel
-- [ ] Global metrics
+- [x] Admin panel
+- [x] Global metrics
 - [ ] Content moderation
 ### Phase 9: Polish & Launch
-- [ ] Landing page
+- [x] Landing page
 - [ ] SEO
 - [ ] Performance
 - [ ] Tests
