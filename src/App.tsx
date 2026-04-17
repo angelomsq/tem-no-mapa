@@ -7,6 +7,8 @@ import Profile from '@/pages/Profile'
 import Achievements from '@/pages/Achievements'
 import Rankings from '@/pages/Rankings'
 import Invite from '@/pages/Invite'
+import Verification from '@/pages/Verification'
+import AdminDashboard from '@/pages/AdminDashboard'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth()
@@ -55,6 +57,8 @@ function App() {
         <Route path="/achievements" element={<ProtectedRoute><Achievements /></ProtectedRoute>} />
         <Route path="/rankings" element={<ProtectedRoute><Rankings /></ProtectedRoute>} />
         <Route path="/invite" element={<ProtectedRoute><Invite /></ProtectedRoute>} />
+        <Route path="/verification" element={<ProtectedRoute><Verification /></ProtectedRoute>} />
+        <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
         <Route path="*" element={<Navigate to="/map" replace />} />
       </Routes>
     </BrowserRouter>
