@@ -100,3 +100,27 @@ export async function updateProfile(data: Partial<Profile>) {
 
   if (error) throw error
 }
+
+export async function updateAvatar(file: File): Promise<string> {
+  if (!supabase) throw new Error('Supabase não configurado')
+  
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('Não autenticado')
+
+  const ext = file.name.split('.').pop()
+  const path = `avatars/${user.id}.${ext}`
+
+  const { error: uploadError } = await supabase.storage
+    .from('avatars')
+    .upload(path, file, { upsert: true })
+
+  if (uploadError) throw uploadError
+
+  const { data: { publicUrl } } = supabase.storage
+    .from('avatars')
+    .getPublicUrl(path)
+
+  await updateProfile({ avatar_url: publicUrl })
+
+  return publicUrl
+}

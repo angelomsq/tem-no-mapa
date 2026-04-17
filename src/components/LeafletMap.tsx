@@ -35,6 +35,7 @@ interface MapProps {
   locations: Location[]
   selectedState: string
   onStateSelect: (state: string) => void
+  dominationMode?: boolean
 }
 
 function MapController({ selectedState }: { selectedState: string }) {

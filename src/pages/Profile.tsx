@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
+import html2canvas from 'html2canvas'
 import { supabase } from '@/lib/supabase'
-import { useAuth, updateProfile } from '@/hooks/useAuth'
+import { useAuth, updateProfile, updateAvatar } from '@/hooks/useAuth'
 import { ESTADOS } from '@/types'
 
 interface UserStats {
@@ -12,8 +13,10 @@ interface UserStats {
 
 export default function Profile() {
   const { user, profile } = useAuth()
+  const fileInputRef = useRef<HTMLInputElement>(null)
   const [editing, setEditing] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [uploading, setUploading] = useState(false)
   const [stats, setStats] = useState<UserStats>({ total_locations: 0, total_badges: 0, member_days: 0 })
   const [formData, setFormData] = useState({
     full_name: profile?.full_name || '',
@@ -61,6 +64,36 @@ export default function Profile() {
     }
   }
 
+  async function handleAvatarUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setUploading(true)
+    try {
+      await updateAvatar(file)
+      window.location.reload()
+    } catch (error) {
+      console.error('Erro ao fazer upload:', error)
+    } finally {
+      setUploading(false)
+    }
+  }
+
+  async function generateShareImage() {
+    const element = document.getElementById('profile-card')
+    if (!element) return
+
+    try {
+      const canvas = await html2canvas(element, { backgroundColor: '#009C3B' })
+      const link = document.createElement('a')
+      link.download = 'meu-perfil-tem-no-mapa.png'
+      link.href = canvas.toDataURL()
+      link.click()
+    } catch (error) {
+      console.error('Erro ao gerar imagem:', error)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-[#fcf9f8]">
       <header className="flex items-center justify-between p-4 bg-white border-b border-[#e5e4e7]">
@@ -76,12 +109,32 @@ export default function Profile() {
       <main className="max-w-4xl mx-auto p-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="md:col-span-2">
-            <div className="bg-white rounded-lg p-6 border border-[#e5e4e7]">
+            <div id="profile-card" className="bg-white rounded-lg p-6 border border-[#e5e4e7]">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-4">
-                  <div className="w-20 h-20 rounded-full bg-[#009C3B] flex items-center justify-center text-white text-3xl font-semibold">
-                    {(formData.full_name || user?.email)?.[0]?.toUpperCase()}
-                  </div>
+                  {profile?.avatar_url ? (
+                    <img
+                      src={profile.avatar_url}
+                      alt="Avatar"
+                      className="w-20 h-20 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div 
+                      onClick={() => fileInputRef.current?.click()}
+                      className="w-20 h-20 rounded-full bg-[#009C3B] flex items-center justify-center text-white text-3xl font-semibold cursor-pointer hover:opacity-80"
+                    >
+                      {(formData.full_name || user?.email)?.[0]?.toUpperCase()}
+                    </div>
+                  )}
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleAvatarUpload}
+                    disabled={uploading}
+                    className="hidden"
+                  />
+                  {uploading && <span className="text-sm text-[#6b6375]">Enviando...</span>}
                   <div>
                     <h2 className="text-2xl font-semibold">{formData.full_name || 'Meu Perfil'}</h2>
                     <p className="text-sm text-[#6b6375]">{user?.email}</p>
@@ -192,6 +245,12 @@ export default function Profile() {
                     className="px-4 py-2 border border-[#e5e4e7] rounded-lg font-medium"
                   >
                     Editar Perfil
+                  </button>
+                  <button
+                    onClick={generateShareImage}
+                    className="ml-2 px-4 py-2 bg-[#009C3B] text-white rounded-lg font-medium"
+                  >
+                    📤 Compartilhar
                   </button>
                 </div>
               )}
