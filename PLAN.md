@@ -41,8 +41,8 @@ Deploy:      Vercel (free)
 - [x] State filters
 - [ ] Automatic geolocation
 ### Phase 4: Gamification
-- [ ] Achievements/badges system
-- [ ] Rankings (country, state, city)
+- [x] Achievements/badges system
+- [x] Rankings (country, state, city)
 - [ ] Weekly missions
 - [ ] "Domination map" by state
 ### Phase 5: User Profile

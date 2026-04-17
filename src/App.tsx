@@ -4,6 +4,8 @@ import Login from '@/pages/Login'
 import Register from '@/pages/Register'
 import Map from '@/pages/Map'
 import Profile from '@/pages/Profile'
+import Achievements from '@/pages/Achievements'
+import Rankings from '@/pages/Rankings'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth()
@@ -49,6 +51,8 @@ function App() {
         <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
         <Route path="/map" element={<ProtectedRoute><Map /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        <Route path="/achievements" element={<ProtectedRoute><Achievements /></ProtectedRoute>} />
+        <Route path="/rankings" element={<ProtectedRoute><Rankings /></ProtectedRoute>} />
         <Route path="*" element={<Navigate to="/map" replace />} />
       </Routes>
     </BrowserRouter>
