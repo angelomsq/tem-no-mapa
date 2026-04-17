@@ -84,13 +84,13 @@ export default function LeafletMap({ locations, selectedState, onStateSelect }: 
 
   return (
     <div className="flex h-full">
-      <aside className="w-64 bg-white border-r border-[#e5e4e7] p-4 overflow-y-auto">
-        <h2 className="font-semibold mb-4">Filtrar por Estado</h2>
+      <aside className="w-64 bg-[#fcf9f8] border-r border-[#bdcab9]/20 p-6 overflow-y-auto">
+        <h2 className="font-semibold text-[#1c1b1b] mb-4">Filtrar por Estado</h2>
         
         <select
           value={selectedState}
           onChange={(e) => onStateSelect(e.target.value)}
-          className="w-full p-2 border border-[#e5e4e7] rounded-lg mb-4"
+          className="w-full p-3 bg-[#f6f3f2] border border-transparent rounded-lg mb-4 text-[#1c1b1b] focus:outline-none focus:bg-white focus:border-[#009C3B]/20"
         >
           <option value="">Todos os estados</option>
           {ESTADOS.map(estado => (
@@ -100,42 +100,42 @@ export default function LeafletMap({ locations, selectedState, onStateSelect }: 
           ))}
         </select>
 
-        <div className="mt-6">
-          <h3 className="font-medium mb-2">Legenda</h3>
+        <div className="mt-8">
+          <h3 className="font-medium text-[#1c1b1b] mb-3">Legenda</h3>
           <div className="space-y-2 text-sm">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <span className="w-3 h-3 rounded-full bg-[#E8F5E9]"></span>
-              <span className="text-[#6b6375]">0 brasileiros</span>
+              <span className="text-[#6b7280]">0 brasileiros</span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <span className="w-3 h-3 rounded-full bg-[#81C784]"></span>
-              <span className="text-[#6b6375]">1-4</span>
+              <span className="text-[#6b7280]">1-4</span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <span className="w-3 h-3 rounded-full bg-[#4CAF50]"></span>
-              <span className="text-[#6b6375]">5-14</span>
+              <span className="text-[#6b7280]">5-14</span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <span className="w-3 h-3 rounded-full bg-[#2E7D32]"></span>
-              <span className="text-[#6b6375]">15-29</span>
+              <span className="text-[#6b7280]">15-29</span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <span className="w-3 h-3 rounded-full bg-[#1B5E20]"></span>
-              <span className="text-[#6b6375]">30+</span>
+              <span className="text-[#6b7280]">30+</span>
             </div>
           </div>
         </div>
 
-        <div className="mt-6">
-          <h3 className="font-medium mb-2">Por País</h3>
-          <div className="space-y-1">
+        <div className="mt-8">
+          <h3 className="font-medium text-[#1c1b1b] mb-3">Por País</h3>
+          <div className="space-y-2">
             {Object.entries(countryCounts)
               .sort((a, b) => b[1] - a[1])
               .slice(0, 10)
               .map(([country, count]) => (
-                <div key={country} className="flex justify-between text-sm py-1 border-b border-[#f0f0f0]">
-                  <span className="text-[#6b6375]">{country}</span>
-                  <span className="font-medium">{count}</span>
+                <div key={country} className="flex justify-between text-sm py-2 border-b border-[#bdcab9]/10">
+                  <span className="text-[#6b7280]">{country}</span>
+                  <span className="font-semibold text-[#009C3B]">{count}</span>
                 </div>
               ))}
           </div>
@@ -178,8 +178,9 @@ export default function LeafletMap({ locations, selectedState, onStateSelect }: 
           ))}
         </MapContainer>
 
-        <div className="absolute bottom-4 right-4 bg-white rounded-lg shadow-lg p-3 text-sm z-[1000]">
-          <span className="text-[#6b6375]">{locations.length} brasileiros no mapa</span>
+        <div className="absolute bottom-6 right-6 glass rounded-lg px-4 py-3 text-sm z-[1000]">
+          <span className="text-[#1c1b1b] font-medium">{locations.length}</span>
+          <span className="text-[#6b7280]"> brasileiros no mapa</span>
         </div>
       </div>
     </div>

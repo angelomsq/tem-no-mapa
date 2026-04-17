@@ -1,10 +1,14 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { signUp } from '@/lib/supabase'
+import { Button, Card, Input } from '@/components/ui'
 
 export default function Register() {
+  const [searchParams] = useSearchParams()
+  const referralCode = searchParams.get('ref')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [fullName, setFullName] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
@@ -15,7 +19,15 @@ export default function Register() {
     setError('')
 
     try {
-      await signUp(email, password)
+      const { user } = await signUp(email, password)
+      if (user) {
+        const { supabase } = await import('@/lib/supabase')
+        await supabase?.from('profiles').insert({
+          id: user.id,
+          full_name: fullName,
+          referral_code: referralCode || null,
+        })
+      }
       setSuccess(true)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro ao cadastrar')
@@ -26,70 +38,83 @@ export default function Register() {
 
   if (success) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#fcf9f8]">
-        <div className="w-full max-w-md p-8 text-center">
-          <h1 className="text-3xl font-semibold mb-4 text-[#009C3B]">
+      <div className="min-h-screen flex items-center justify-center bg-[#fcf9f8] p-6">
+        <Card className="w-full max-w-md text-center">
+          <div className="text-5xl mb-4">🎉</div>
+          <h1 className="text-2xl font-bold text-[#009C3B] mb-4">
             Verifique seu email
           </h1>
-          <p className="text-[#6b6375]">
-            Enviamos um link de confirmação para {email}
+          <p className="text-[#6b7280]">
+            Enviamos um link de confirmação para <strong>{email}</strong>
           </p>
-        </div>
+        </Card>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#fcf9f8]">
-      <div className="w-full max-w-md p-8">
-        <h1 className="text-3xl font-semibold text-center mb-8 text-[#009C3B]">
-          Criar conta
-        </h1>
+    <div className="min-h-screen flex items-center justify-center bg-[#fcf9f8] p-6">
+      <Card className="w-full max-w-md">
+        <div className="text-center mb-8">
+          <h1 className="text-2xl font-bold text-[#009C3B] mb-2">
+            Criar conta
+          </h1>
+          <p className="text-[#6b7280]">
+            Junte-se à comunidade brasileira no exterior
+          </p>
+        </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 border border-[#e5e4e7] rounded-lg bg-white"
-              required
-            />
-          </div>
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <Input
+            type="text"
+            label="Nome completo"
+            placeholder="Seu nome"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            required
+          />
 
-          <div>
-            <input
-              type="password"
-              placeholder="Senha"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 border border-[#e5e4e7] rounded-lg bg-white"
-              minLength={6}
-              required
-            />
-          </div>
+          <Input
+            type="email"
+            label="Email"
+            placeholder="seu@email.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+
+          <Input
+            type="password"
+            label="Senha"
+            placeholder="Mínimo 6 caracteres"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            minLength={6}
+            required
+          />
 
           {error && (
-            <p className="text-red-500 text-sm">{error}</p>
+            <p className="text-sm text-[#ba1a1a] bg-[#ffdad6] p-3 rounded-lg">
+              {error}
+            </p>
           )}
 
-          <button
+          <Button
             type="submit"
             disabled={loading}
-            className="w-full py-3 bg-[#009C3B] text-white rounded-lg font-medium hover:opacity-90 disabled:opacity-50"
+            className="w-full"
           >
-            {loading ? 'Criando...' : 'Criar conta'}
-          </button>
+            {loading ? 'Criando conta...' : 'Criar conta'}
+          </Button>
         </form>
 
-        <p className="mt-8 text-center text-[#6b6375]">
+        <p className="mt-8 text-center text-[#6b7280]">
           Já tem conta?{' '}
-          <Link to="/login" className="text-[#009C3B] font-medium">
+          <Link to="/login" className="text-[#009C3B] font-semibold hover:underline">
             Entrar
           </Link>
         </p>
-      </div>
+      </Card>
     </div>
   )
 }

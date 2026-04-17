@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { signIn, signInWithGoogle } from '@/lib/supabase'
+import { Button, Card, Input } from '@/components/ui'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -36,67 +37,76 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#fcf9f8]">
-      <div className="w-full max-w-md p-8">
-        <h1 className="text-3xl font-semibold text-center mb-8 text-[#009C3B]">
-          Tem no Mapa
-        </h1>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 border border-[#e5e4e7] rounded-lg bg-white"
-              required
-            />
-          </div>
-
-          <div>
-            <input
-              type="password"
-              placeholder="Senha"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 border border-[#e5e4e7] rounded-lg bg-white"
-              required
-            />
-          </div>
-
-          {error && (
-            <p className="text-red-500 text-sm">{error}</p>
-          )}
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-3 bg-[#009C3B] text-white rounded-lg font-medium hover:opacity-90 disabled:opacity-50"
-          >
-            {loading ? 'Entrando...' : 'Entrar'}
-          </button>
-        </form>
-
-        <div className="mt-4 text-center">
-          <span className="text-[#6b6375]">ou</span>
+    <div className="min-h-screen flex items-center justify-center bg-[#fcf9f8] p-6">
+      <Card className="w-full max-w-md">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-[#009C3B] mb-2">
+            Tem no Mapa
+          </h1>
+          <p className="text-[#6b7280]">
+            Entre na comunidade brasileira no exterior
+          </p>
         </div>
 
-        <button
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <Input
+            type="email"
+            label="Email"
+            placeholder="seu@email.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+
+          <Input
+            type="password"
+            label="Senha"
+            placeholder="••••••••"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+
+          {error && (
+            <p className="text-sm text-[#ba1a1a] bg-[#ffdad6] p-3 rounded-lg">
+              {error}
+            </p>
+          )}
+
+          <Button
+            type="submit"
+            disabled={loading}
+            className="w-full"
+          >
+            {loading ? 'Entrando...' : 'Entrar'}
+          </Button>
+        </form>
+
+        <div className="relative my-6">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-[#bdcab9]/20"></div>
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="px-4 bg-white text-[#6b7280]">ou continue com</span>
+          </div>
+        </div>
+
+        <Button
+          variant="secondary"
           onClick={handleGoogle}
           disabled={loading}
-          className="w-full mt-4 py-3 border border-[#e5e4e7] rounded-lg font-medium hover:bg-[#f6f3f2] disabled:opacity-50"
+          className="w-full"
         >
-          Continuar com Google
-        </button>
+          Google
+        </Button>
 
-        <p className="mt-8 text-center text-[#6b6375]">
+        <p className="mt-8 text-center text-[#6b7280]">
           Não tem conta?{' '}
-          <Link to="/register" className="text-[#009C3B] font-medium">
+          <Link to="/register" className="text-[#009C3B] font-semibold hover:underline">
             Cadastrar
           </Link>
         </p>
-      </div>
+      </Card>
     </div>
   )
 }

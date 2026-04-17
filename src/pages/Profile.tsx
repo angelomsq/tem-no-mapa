@@ -96,20 +96,22 @@ export default function Profile() {
 
   return (
     <div className="min-h-screen bg-[#fcf9f8]">
-      <header className="flex items-center justify-between p-4 bg-white border-b border-[#e5e4e7]">
-        <h1 className="text-xl font-semibold text-[#009C3B]">Tem no Mapa</h1>
-        <nav className="flex items-center gap-6">
-          <Link to="/map" className="text-[#6b6375]">Mapa</Link>
-          <Link to="/achievements" className="text-[#6b6375]">Conquistas</Link>
-          <Link to="/rankings" className="text-[#6b6375]">Ranking</Link>
-          <Link to="/profile" className="text-[#009C3B] font-medium">Perfil</Link>
-        </nav>
+      <header className="glass sticky top-0 z-50 border-b border-[#bdcab9]/20">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <Link to="/map" className="text-xl font-bold text-[#009C3B]">Tem no Mapa</Link>
+          <nav className="flex items-center gap-6">
+            <Link to="/map" className="text-sm font-medium text-[#6b7280] hover:text-[#1c1b1b]">Mapa</Link>
+            <Link to="/achievements" className="text-sm font-medium text-[#6b7280] hover:text-[#1c1b1b]">Conquistas</Link>
+            <Link to="/rankings" className="text-sm font-medium text-[#6b7280] hover:text-[#1c1b1b]">Ranking</Link>
+            <Link to="/profile" className="text-sm font-medium text-[#009C3B]">Perfil</Link>
+          </nav>
+        </div>
       </header>
 
       <main className="max-w-4xl mx-auto p-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="md:col-span-2">
-            <div id="profile-card" className="bg-white rounded-lg p-6 border border-[#e5e4e7]">
+            <div id="profile-card" className="bg-white rounded-xl p-6">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-4">
                   {profile?.avatar_url ? (
@@ -205,17 +207,17 @@ export default function Profile() {
                       className="w-full p-2 border border-[#e5e4e7] rounded-lg"
                     />
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-3">
                     <button
                       onClick={handleSave}
                       disabled={loading}
-                      className="px-4 py-2 bg-[#009C3B] text-white rounded-lg font-medium"
+                      className="px-4 py-2 bg-gradient-to-r from-[#009C3B] to-[#008732] text-white rounded-lg font-semibold"
                     >
                       {loading ? 'Salvando...' : 'Salvar'}
                     </button>
                     <button
                       onClick={() => setEditing(false)}
-                      className="px-4 py-2 border border-[#e5e4e7] rounded-lg font-medium"
+                      className="px-4 py-2 border border-[#bdcab9]/20 rounded-lg font-medium text-[#6b7280]"
                     >
                       Cancelar
                     </button>
@@ -223,79 +225,81 @@ export default function Profile() {
                 </div>
               ) : (
                 <div>
-                  {profile?.bio && <p className="text-[#6b6375] mb-6 text-lg">{profile.bio}</p>}
-                  <div className="grid grid-cols-2 gap-4 text-sm mb-4">
+                  {profile?.bio && <p className="text-[#6b7280] mb-6 text-lg">{profile.bio}</p>}
+                  <div className="grid grid-cols-2 gap-4 text-sm mb-6">
                     <div>
-                      <span className="text-[#6b6375]">Estado de Origem</span>
-                      <p className="font-medium text-lg">
+                      <span className="text-[#6b7280]">Estado de Origem</span>
+                      <p className="font-semibold text-lg text-[#1c1b1b]">
                         {profile?.state ? `${profile.state} - ${ESTADOS.find(e => e.codigo === profile.state)?.nome}` : '-'}
                       </p>
                     </div>
                     <div>
-                      <span className="text-[#6b6375]">País Atual</span>
-                      <p className="font-medium text-lg">{profile?.country || '-'}</p>
+                      <span className="text-[#6b7280]">País Atual</span>
+                      <p className="font-semibold text-lg text-[#1c1b1b]">{profile?.country || '-'}</p>
                     </div>
                     <div>
-                      <span className="text-[#6b6375]">Cidade Atual</span>
-                      <p className="font-medium text-lg">{profile?.city || '-'}</p>
+                      <span className="text-[#6b7280]">Cidade Atual</span>
+                      <p className="font-semibold text-lg text-[#1c1b1b]">{profile?.city || '-'}</p>
                     </div>
                   </div>
-                  <button
-                    onClick={() => setEditing(true)}
-                    className="px-4 py-2 border border-[#e5e4e7] rounded-lg font-medium"
-                  >
-                    Editar Perfil
-                  </button>
-                  <button
-                    onClick={generateShareImage}
-                    className="ml-2 px-4 py-2 bg-[#009C3B] text-white rounded-lg font-medium"
-                  >
-                    📤 Compartilhar
-                  </button>
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => setEditing(true)}
+                      className="px-4 py-2 border border-[#bdcab9]/20 rounded-lg font-medium text-[#6b7280] hover:bg-[#f6f3f2]"
+                    >
+                      Editar Perfil
+                    </button>
+                    <button
+                      onClick={generateShareImage}
+                      className="px-4 py-2 bg-gradient-to-r from-[#009C3B] to-[#008732] text-white rounded-lg font-semibold"
+                    >
+                      Compartilhar
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
           </div>
 
           <div className="space-y-6">
-            <div className="bg-white rounded-lg p-6 border border-[#e5e4e7]">
-              <h3 className="font-semibold mb-4">Estatísticas</h3>
+            <div className="bg-white rounded-xl p-6">
+              <h3 className="font-semibold text-[#1c1b1b] mb-4">Estatísticas</h3>
               <div className="space-y-4">
                 <div className="flex justify-between">
-                  <span className="text-[#6b6375]">Locais cadastrados</span>
+                  <span className="text-[#6b7280]">Locais cadastrados</span>
                   <span className="font-bold text-[#009C3B]">{stats.total_locations}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#6b6375]">Conquistas</span>
+                  <span className="text-[#6b7280]">Conquistas</span>
                   <span className="font-bold text-[#009C3B]">{stats.total_badges}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#6b6375]">Membro desde</span>
-                  <span className="font-bold text-[#009C3B]}">{stats.member_days} dias</span>
+                  <span className="text-[#6b7280]">Membro desde</span>
+                  <span className="font-bold text-[#009C3B]">{stats.member_days} dias</span>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-lg p-6 border border-[#e5e4e7]">
-              <h3 className="font-semibold mb-4">Acesso Rápido</h3>
+            <div className="bg-white rounded-xl p-6">
+              <h3 className="font-semibold text-[#1c1b1b] mb-4">Acesso Rápido</h3>
               <div className="space-y-2">
                 <Link
                   to="/achievements"
-                  className="block p-3 rounded-lg bg-[#f6f3f2] hover:bg-[#eae7e7] text-center"
+                  className="block p-3 rounded-lg bg-[#f6f3f2] hover:bg-[#eae7e7] text-center text-[#6b7280] font-medium"
                 >
-                  🏆 Minhas Conquistas
+                  Minhas Conquistas
                 </Link>
                 <Link
                   to="/rankings"
-                  className="block p-3 rounded-lg bg-[#f6f3f2] hover:bg-[#eae7e7] text-center"
+                  className="block p-3 rounded-lg bg-[#f6f3f2] hover:bg-[#eae7e7] text-center text-[#6b7280] font-medium"
                 >
-                  📊 Ranking
+                  Ranking
                 </Link>
                 <Link
                   to="/map"
-                  className="block p-3 rounded-lg bg-[#f6f3f2] hover:bg-[#eae7e7] text-center"
+                  className="block p-3 rounded-lg bg-[#f6f3f2] hover:bg-[#eae7e7] text-center text-[#6b7280] font-medium"
                 >
-                  🗺️ Explorar Mapa
+                  Explorar Mapa
                 </Link>
               </div>
             </div>

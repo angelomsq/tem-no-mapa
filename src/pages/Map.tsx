@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/hooks/useAuth'
 import LeafletMap from '@/components/LeafletMap'
+import { Button } from '@/components/ui'
 
 interface Location {
   id: string
@@ -16,6 +17,7 @@ interface Location {
 
 export default function Map() {
   const { user, profile } = useAuth()
+  const navigate = useNavigate()
   const [locations, setLocations] = useState<Location[]>([])
   const [filter, setFilter] = useState<string>('')
   const [loading, setLoading] = useState(true)
@@ -38,35 +40,56 @@ export default function Map() {
     loadLocations()
   }, [filter])
 
-  function handleSignOut() {
-    supabase?.auth.signOut()
+  async function handleSignOut() {
+    await supabase?.auth.signOut()
+    navigate('/login')
   }
+
+  const navLinks = [
+    { to: '/map', label: 'Mapa', active: true },
+    { to: '/achievements', label: 'Conquistas' },
+    { to: '/rankings', label: 'Ranking' },
+    { to: '/invite', label: 'Convidar' },
+    { to: '/verification', label: 'Verificação' },
+    { to: '/profile', label: 'Perfil' },
+  ]
 
   return (
     <div className="min-h-screen bg-[#fcf9f8]">
-      <header className="flex items-center justify-between p-4 bg-white border-b border-[#e5e4e7]">
-        <h1 className="text-xl font-semibold text-[#009C3B]">Tem no Mapa</h1>
-        
-        <nav className="flex items-center gap-6">
-          <Link to="/map" className="text-[#009C3B] font-medium">Mapa</Link>
-          <Link to="/achievements" className="text-[#6b6375]">Conquistas</Link>
-          <Link to="/rankings" className="text-[#6b6375]">Ranking</Link>
-          <Link to="/invite" className="text-[#6b6375]">Convidar</Link>
-          <Link to="/profile" className="text-[#6b6375]">Perfil</Link>
-        </nav>
+      <header className="glass sticky top-0 z-50 border-b border-[#bdcab9]/20">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <Link to="/map" className="text-xl font-bold text-[#009C3B]">
+            Tem no Mapa
+          </Link>
+          
+          <nav className="flex items-center gap-8">
+            {navLinks.map(link => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className={`text-sm font-medium transition-colors ${
+                  link.active
+                    ? 'text-[#009C3B]'
+                    : 'text-[#6b7280] hover:text-[#1c1b1b]'
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
 
-        <div className="flex items-center gap-3">
-          <span className="text-sm text-[#6b6375]">{profile?.full_name || user?.email}</span>
-          <button 
-            onClick={handleSignOut}
-            className="text-sm text-[#6b6375] hover:text-[#009C3B]"
-          >
-            Sair
-          </button>
+          <div className="flex items-center gap-4">
+            <div className="text-sm text-[#6b7280]">
+              {profile?.full_name || user?.email?.split('@')[0]}
+            </div>
+            <Button variant="tertiary" size="sm" onClick={handleSignOut}>
+              Sair
+            </Button>
+          </div>
         </div>
       </header>
 
-      <main className="h-[calc(100vh-64px)]">
+      <main className="h-[calc(100vh-73px)]">
         {loading ? (
           <div className="flex items-center justify-center h-full">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#009C3B]"></div>
