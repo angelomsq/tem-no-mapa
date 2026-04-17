@@ -34,11 +34,11 @@ Deploy:      Vercel (free)
 - [x] Login page
 - [x] Route protection
 ### Phase 3: Interactive Map
-- [ ] LeafletMap component
-- [ ] Marker clustering
+- [x] LeafletMap component
+- [x] Marker clustering
 - [ ] Concentration heatmap
 - [ ] State flag pins
-- [ ] State filters
+- [x] State filters
 - [ ] Automatic geolocation
 ### Phase 4: Gamification
 - [ ] Achievements/badges system
