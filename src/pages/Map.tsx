@@ -49,6 +49,9 @@ export default function Map() {
         
         <nav className="flex items-center gap-6">
           <Link to="/map" className="text-[#009C3B] font-medium">Mapa</Link>
+          <Link to="/achievements" className="text-[#6b6375]">Conquistas</Link>
+          <Link to="/rankings" className="text-[#6b6375]">Ranking</Link>
+          <Link to="/invite" className="text-[#6b6375]">Convidar</Link>
           <Link to="/profile" className="text-[#6b6375]">Perfil</Link>
         </nav>
 

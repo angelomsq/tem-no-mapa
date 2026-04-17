@@ -46,13 +46,14 @@ Deploy:      Vercel (free)
 - [ ] Weekly missions
 - [ ] "Domination map" by state
 ### Phase 5: User Profile
-- [ ] Profile page
-- [ ] Edit profile data
+- [x] Profile page
+- [x] Edit profile data
 - [ ] Avatar upload
-- [ ] Personal statistics
+- [x] Personal statistics
+
 ### Phase 6: Social & Sharing
 - [ ] Image generation (html2canvas)
-- [ ] Unique invite link
+- [x] Unique invite link
 - [ ] Referral system
 - [ ] Referral rewards
 ### Phase 7: Social Verification
