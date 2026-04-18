@@ -27,6 +27,10 @@ export default function AdminDashboard() {
   })
   const [recentUsers, setRecentUsers] = useState<RecentUser[]>([])
 
+  console.log('[AdminDashboard] profile:', profile)
+  console.log('[AdminDashboard] loading:', loading)
+  console.log('[AdminDashboard] role:', profile?.role)
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -35,7 +39,11 @@ export default function AdminDashboard() {
     )
   }
 
-  if (!profile || profile?.role !== 'admin') {
+  if (!profile) {
+    return <Navigate to="/login" replace />
+  }
+
+  if (profile?.role !== 'admin') {
     return <Navigate to="/map" replace />
   }
 
