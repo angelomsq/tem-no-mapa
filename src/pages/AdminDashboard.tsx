@@ -26,28 +26,17 @@ export default function AdminDashboard() {
     ambassadors: 0,
   })
   const [recentUsers, setRecentUsers] = useState<RecentUser[]>([])
-
-  console.log('[AdminDashboard] profile:', profile)
-  console.log('[AdminDashboard] loading:', loading)
-  console.log('[AdminDashboard] role:', profile?.role)
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#009C3B]"></div>
-      </div>
-    )
-  }
-
-  if (!profile) {
-    return <Navigate to="/login" replace />
-  }
-
-  if (profile?.role !== 'admin') {
-    return <Navigate to="/map" replace />
-  }
+  const [isAdmin, setIsAdmin] = useState(false)
 
   useEffect(() => {
+    if (!loading && profile) {
+      setIsAdmin(profile.role === 'admin')
+    }
+  }, [loading, profile])
+
+  useEffect(() => {
+    if (!isAdmin || !supabase) return
+
     async function loadDashboard() {
       const client = supabase
       if (!client) return
@@ -76,7 +65,23 @@ export default function AdminDashboard() {
     }
 
     loadDashboard()
-  }, [])
+  }, [isAdmin])
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#009C3B]"></div>
+      </div>
+    )
+  }
+
+  if (!profile) {
+    return <Navigate to="/login" replace />
+  }
+
+  if (!isAdmin) {
+    return <Navigate to="/map" replace />
+  }
 
   return (
     <div className="min-h-screen bg-[#fcf9f8]">
