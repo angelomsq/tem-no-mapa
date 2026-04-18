@@ -38,17 +38,21 @@ export default function AdminDashboard() {
 
     async function loadDashboard() {
       if (!supabase) {
+        console.error('[AdminDashboard] supabase is null')
         setDataLoading(false)
         return
       }
 
       try {
+        console.log('[AdminDashboard] loading data...')
         const [profiles, locations, verified, ambassadors] = await Promise.all([
           supabase.from('profiles').select('id', { count: 'exact', head: true }),
           supabase.from('user_locations').select('id', { count: 'exact', head: true }),
           supabase.from('profiles').select('id', { count: 'exact', head: true }).eq('is_verified', true),
           supabase.from('profiles').select('id', { count: 'exact', head: true }).eq('is_ambassador', true),
         ])
+
+        console.log('[AdminDashboard] profiles count:', profiles.count)
 
         setStats({
           total_users: profiles.count || 0,
@@ -64,12 +68,19 @@ export default function AdminDashboard() {
           .limit(10)
 
         setRecentUsers(recent as RecentUser[] || [])
+      } catch (e) {
+        console.error('[AdminDashboard] error:', e)
       } finally {
         setDataLoading(false)
       }
     }
 
-    loadDashboard()
+    const timer = setTimeout(() => {
+      console.log('[AdminDashboard] timeout, setting loading false')
+      setDataLoading(false)
+    }, 5000)
+
+    loadDashboard().finally(() => clearTimeout(timer))
   }, [isAdmin])
 
   if (loading || dataLoading) {
