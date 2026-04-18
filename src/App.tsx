@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from '@/hooks/useAuth'
+import { supabase } from '@/lib/supabase'
 import Landing from '@/pages/Landing'
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
@@ -49,6 +50,17 @@ function PublicRoute({ children }: { children: React.ReactNode }) {
 }
 
 function App() {
+  if (!supabase) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-8">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-[#009C3B] mb-4">Erro de Configuração</h1>
+          <p className="text-[#6b7280]">Variáveis de ambiente não configuradas no Vercel</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <BrowserRouter>
       <Routes>
