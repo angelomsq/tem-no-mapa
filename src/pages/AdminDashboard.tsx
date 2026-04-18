@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/hooks/useAuth'
@@ -26,48 +26,53 @@ export default function AdminDashboard() {
     ambassadors: 0,
   })
   const [recentUsers, setRecentUsers] = useState<RecentUser[]>([])
-  const [isAdmin, setIsAdmin] = useState(false)
+  const [dataLoading, setDataLoading] = useState(true)
+
+  const isAdmin = useMemo(() => profile?.role === 'admin', [profile])
 
   useEffect(() => {
-    if (!loading && profile) {
-      setIsAdmin(profile.role === 'admin')
+    if (!isAdmin) {
+      setDataLoading(false)
+      return
     }
-  }, [loading, profile])
-
-  useEffect(() => {
-    if (!isAdmin || !supabase) return
 
     async function loadDashboard() {
-      const client = supabase
-      if (!client) return
+      if (!supabase) {
+        setDataLoading(false)
+        return
+      }
 
-      const [profiles, locations, verified, ambassadors] = await Promise.all([
-        client.from('profiles').select('id', { count: 'exact', head: true }),
-        client.from('user_locations').select('id', { count: 'exact', head: true }),
-        client.from('profiles').select('id', { count: 'exact', head: true }).eq('is_verified', true),
-        client.from('profiles').select('id', { count: 'exact', head: true }).eq('is_ambassador', true),
-      ])
+      try {
+        const [profiles, locations, verified, ambassadors] = await Promise.all([
+          supabase.from('profiles').select('id', { count: 'exact', head: true }),
+          supabase.from('user_locations').select('id', { count: 'exact', head: true }),
+          supabase.from('profiles').select('id', { count: 'exact', head: true }).eq('is_verified', true),
+          supabase.from('profiles').select('id', { count: 'exact', head: true }).eq('is_ambassador', true),
+        ])
 
-      setStats({
-        total_users: profiles.count || 0,
-        total_locations: locations.count || 0,
-        verified_users: verified.count || 0,
-        ambassadors: ambassadors.count || 0,
-      })
+        setStats({
+          total_users: profiles.count || 0,
+          total_locations: locations.count || 0,
+          verified_users: verified.count || 0,
+          ambassadors: ambassadors.count || 0,
+        })
 
-      const { data: recent } = await client
-        .from('profiles')
-        .select('id, full_name, country, created_at')
-        .order('created_at', { ascending: false })
-        .limit(10)
+        const { data: recent } = await supabase
+          .from('profiles')
+          .select('id, full_name, country, created_at')
+          .order('created_at', { ascending: false })
+          .limit(10)
 
-      setRecentUsers(recent as RecentUser[] || [])
+        setRecentUsers(recent as RecentUser[] || [])
+      } finally {
+        setDataLoading(false)
+      }
     }
 
     loadDashboard()
   }, [isAdmin])
 
-  if (loading) {
+  if (loading || dataLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#009C3B]"></div>
