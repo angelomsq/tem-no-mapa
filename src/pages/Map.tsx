@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '@/lib/supabase'
 import LeafletMap from '@/components/LeafletMap'
-import { MapPin, Globe, Lightbulb, ArrowRight, ChevronDown } from 'lucide-react'
+import { MapPin, Globe, Lightbulb, ArrowRight, ChevronDown, Users } from 'lucide-react'
 import { ESTADOS } from '@/types'
 
 interface Location {
@@ -26,6 +26,12 @@ const topCities: CityStats[] = [
   { city: 'Lisbon', country: 'PT', count: 250000 },
   { city: 'London', country: 'UK', count: 180000 },
   { city: 'Hamamatsu', country: 'JP', count: 200000 },
+]
+
+const statesOrigin = [
+  { state: 'São Paulo', percentage: 28 },
+  { state: 'Rio de Janeiro', percentage: 15 },
+  { state: 'Minas Gerais', percentage: 12 },
 ]
 
 export default function Map() {
@@ -61,7 +67,7 @@ export default function Map() {
             The Global Neighborhood
           </Link>
           <nav className="hidden md:flex items-center gap-8">
-            <button className="text-sm font-medium text-[#009C3B]">Map</button>
+            <button onClick={() => setShowInsights(false)} className="text-sm font-medium text-[#009C3B]">Map</button>
             <button className="text-sm font-medium text-[#6b7280] hover:text-[#1c1b1b]">Communities</button>
             <button className="text-sm font-medium text-[#6b7280] hover:text-[#1c1b1b]">Directory</button>
             <button className="text-sm font-medium text-[#6b7280] hover:text-[#1c1b1b]">Events</button>
@@ -159,6 +165,38 @@ export default function Map() {
                   <span className="text-gray-400">Top Destination</span>
                 </div>
                 <p className="text-3xl font-bold text-white">United States</p>
+              </div>
+              <div className="bg-[#2a2a2a] rounded-xl p-6">
+                <div className="flex items-center gap-3 mb-2">
+                  <Users className="w-6 h-6 text-[#FFDF00]" />
+                  <span className="text-gray-400">Regional Spotlight</span>
+                </div>
+                <p className="text-sm text-gray-300 mb-3">
+                  The European Connection
+                </p>
+                <p className="text-sm text-gray-400">
+                  Portugal remains the leading destination in Europe, with over 250,000 residents. Recent years have seen a 20% surge in the professional diaspora moving to Lisbon and Porto.
+                </p>
+                <button className="flex items-center gap-2 mt-3 text-[#009C3B] text-sm hover:underline">
+                  Explore Europe Map <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+              <div className="bg-[#2a2a2a] rounded-xl p-6">
+                <h3 className="text-white font-semibold mb-4">States of Origin</h3>
+                <div className="space-y-3">
+                  {statesOrigin.map((state, index) => (
+                    <div key={index} className="flex items-center gap-4">
+                      <span className="text-gray-400 w-32">{state.state}</span>
+                      <div className="flex-1 h-2 bg-[#3a3a3a] rounded-full overflow-hidden">
+                        <div className="h-full bg-[#009C3B] rounded-full" style={{ width: `${state.percentage}%` }}></div>
+                      </div>
+                      <span className="text-white font-medium">{state.percentage}%</span>
+                    </div>
+                  ))}
+                </div>
               </div>
               <div className="bg-[#2a2a2a] rounded-xl p-6">
                 <div className="flex items-center gap-3 mb-2">
