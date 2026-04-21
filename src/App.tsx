@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from '@/hooks/useAuth'
 import { supabase } from '@/lib/supabase'
-import Layout from '@/components/ui/Layout'
 import Landing from '@/pages/Landing'
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
@@ -12,6 +11,8 @@ import Rankings from '@/pages/Rankings'
 import Invite from '@/pages/Invite'
 import Verification from '@/pages/Verification'
 import AdminDashboard from '@/pages/AdminDashboard'
+import Moderation from '@/pages/Moderation'
+import UserManagement from '@/pages/UserManagement'
 import Missions from '@/pages/Missions'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -29,7 +30,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
     return <Navigate to="/login" replace />
   }
 
-  return <Layout>{children}</Layout>
+  return <>{children}</>
 }
 
 function PublicRoute({ children }: { children: React.ReactNode }) {
@@ -76,6 +77,8 @@ function App() {
         <Route path="/invite" element={<ProtectedRoute><Invite /></ProtectedRoute>} />
         <Route path="/verification" element={<ProtectedRoute><Verification /></ProtectedRoute>} />
         <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+        <Route path="/admin/moderation" element={<ProtectedRoute><Moderation /></ProtectedRoute>} />
+        <Route path="/admin/users" element={<ProtectedRoute><UserManagement /></ProtectedRoute>} />
         <Route path="/dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
