@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { signIn, signInWithGoogle } from '@/lib/supabase'
-import { Button, Card, Input } from '@/components/ui'
+import { Button, Card } from '@/components/ui'
+import { Mail, Lock } from 'lucide-react'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -38,34 +39,51 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#fcf9f8] p-6">
-      <Card className="w-full max-w-md">
+      <Card className="w-full max-w-md p-10">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-[#009C3B] mb-2">
+          <h1 className="text-2xl font-bold text-[#009C3B] mb-2 font-[Plus_Jakarta_Sans]">
             Tem no Mapa
           </h1>
           <p className="text-[#6b7280]">
-            Entre na comunidade brasileira no exterior
+            Welcome back to your global neighborhood
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <Input
-            type="email"
-            label="Email"
-            placeholder="seu@email.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <label className="block text-sm font-medium text-[#1c1b1b] mb-2">Email Address</label>
+            <div className="relative">
+              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#6b7280]" />
+              <input
+                type="email"
+                placeholder="mail"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full pl-12 pr-4 py-3 bg-[#f6f3f2] rounded-lg text-[#1c1b1b] placeholder:text-[#6b7280] focus:outline-none focus:ring-2 focus:ring-[#009C3B]/20"
+                required
+              />
+            </div>
+          </div>
 
-          <Input
-            type="password"
-            label="Senha"
-            placeholder="••••••••"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <div>
+            <div className="flex justify-between items-center mb-2">
+              <label className="text-sm font-medium text-[#1c1b1b]">Password</label>
+              <Link to="/forgot-password" className="text-sm text-[#009C3B] hover:underline">
+                Forgot password?
+              </Link>
+            </div>
+            <div className="relative">
+              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#6b7280]" />
+              <input
+                type="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full pl-12 pr-4 py-3 bg-[#f6f3f2] rounded-lg text-[#1c1b1b] placeholder:text-[#6b7280] focus:outline-none focus:ring-2 focus:ring-[#009C3B]/20"
+                required
+              />
+            </div>
+          </div>
 
           {error && (
             <p className="text-sm text-[#ba1a1a] bg-[#ffdad6] p-3 rounded-lg">
@@ -78,7 +96,7 @@ export default function Login() {
             disabled={loading}
             className="w-full"
           >
-            {loading ? 'Entrando...' : 'Entrar'}
+            {loading ? 'Entrando...' : 'Sign In'}
           </Button>
         </form>
 
@@ -87,7 +105,7 @@ export default function Login() {
             <div className="w-full border-t border-[#bdcab9]/20"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-4 bg-white text-[#6b7280]">ou continue com</span>
+            <span className="px-4 bg-white text-[#6b7280]">Or continue with</span>
           </div>
         </div>
 
@@ -101,9 +119,9 @@ export default function Login() {
         </Button>
 
         <p className="mt-8 text-center text-[#6b7280]">
-          Não tem conta?{' '}
+          Don't have an account?{' '}
           <Link to="/register" className="text-[#009C3B] font-semibold hover:underline">
-            Cadastrar
+            Register
           </Link>
         </p>
       </Card>
