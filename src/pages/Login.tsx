@@ -91,11 +91,7 @@ export default function Login() {
             </p>
           )}
 
-          <Button
-            type="submit"
-            disabled={loading}
-            className="w-full"
-          >
+          <Button type="submit" disabled={loading} className="w-full">
             {loading ? 'Entrando...' : 'Sign In'}
           </Button>
         </form>
@@ -109,12 +105,7 @@ export default function Login() {
           </div>
         </div>
 
-        <Button
-          variant="secondary"
-          onClick={handleGoogle}
-          disabled={loading}
-          className="w-full"
-        >
+        <Button variant="secondary" onClick={handleGoogle} disabled={loading} className="w-full">
           Google
         </Button>
 

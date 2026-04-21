@@ -36,14 +36,10 @@ export default function Landing() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/map">
-                <Button variant="secondary" size="lg">
-                  Explorar Mapa
-                </Button>
+                <Button variant="secondary" size="lg">Explorar Mapa</Button>
               </Link>
               <Link to="/register">
-                <Button size="lg">
-                  Cadastrar minha cidade
-                </Button>
+                <Button size="lg">Cadastrar minha cidade</Button>
               </Link>
             </div>
           </div>
@@ -119,9 +115,7 @@ export default function Landing() {
               Junte-se a milhares de brasileiros que já estão conectados e construindo comunidades fortes ao redor do mundo.
             </p>
             <Link to="/register">
-              <Button size="lg">
-                Começar agora
-              </Button>
+              <Button size="lg">Começar agora</Button>
             </Link>
           </div>
         </section>
@@ -140,9 +134,7 @@ export default function Landing() {
               <a href="#" className="text-sm text-gray-400 hover:text-white">Contact Us</a>
               <a href="#" className="text-sm text-gray-400 hover:text-white">Community Guidelines</a>
             </div>
-            <p className="text-sm text-gray-500">
-              © 2024 Tem no Mapa. All rights reserved.
-            </p>
+            <p className="text-sm text-gray-500">© 2024 Tem no Mapa. All rights reserved.</p>
           </div>
         </div>
       </footer>

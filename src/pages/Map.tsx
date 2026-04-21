@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { supabase } from '@/lib/supabase'
+import Layout from '@/components/ui/Layout'
 import LeafletMap from '@/components/LeafletMap'
 import { MapPin, Globe, Lightbulb, ArrowRight, ChevronDown, Users } from 'lucide-react'
 import { ESTADOS } from '@/types'
@@ -59,30 +59,8 @@ export default function Map() {
     loadLocations()
   }, [filter])
 
-  return (
-    <div className="min-h-screen bg-[#fcf9f8]">
-      <header className="glass sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link to="/" className="text-xl font-bold text-[#009C3B] font-[Plus_Jakarta_Sans]">
-            The Global Neighborhood
-          </Link>
-          <nav className="hidden md:flex items-center gap-8">
-            <button onClick={() => setShowInsights(false)} className="text-sm font-medium text-[#009C3B]">Map</button>
-            <button className="text-sm font-medium text-[#6b7280] hover:text-[#1c1b1b]">Communities</button>
-            <button className="text-sm font-medium text-[#6b7280] hover:text-[#1c1b1b]">Directory</button>
-            <button className="text-sm font-medium text-[#6b7280] hover:text-[#1c1b1b]">Events</button>
-          </nav>
-          <div className="flex items-center gap-3">
-            <Link to="/login" className="text-sm font-medium text-[#6b7280] hover:text-[#1c1b1b]">
-              Login
-            </Link>
-            <Link to="/register" className="px-4 py-2 bg-[#009C3B] text-white rounded-lg text-sm font-medium">
-              Join Community
-            </Link>
-          </div>
-        </div>
-      </header>
-
+  const content = (
+    <>
       {showInsights && (
         <section className="py-12 px-6 bg-[#1c1b1b]">
           <div className="max-w-6xl mx-auto">
@@ -171,9 +149,7 @@ export default function Map() {
                   <Users className="w-6 h-6 text-[#FFDF00]" />
                   <span className="text-gray-400">Regional Spotlight</span>
                 </div>
-                <p className="text-sm text-gray-300 mb-3">
-                  The European Connection
-                </p>
+                <p className="text-sm text-gray-300 mb-3">The European Connection</p>
                 <p className="text-sm text-gray-400">
                   Portugal remains the leading destination in Europe, with over 250,000 residents. Recent years have seen a 20% surge in the professional diaspora moving to Lisbon and Porto.
                 </p>
@@ -222,7 +198,7 @@ export default function Map() {
       )}
 
       {!showInsights && (
-        <main className="h-[calc(100vh-73px)]">
+        <div className="h-[calc(100vh-73px)]">
           {loading ? (
             <div className="flex items-center justify-center h-full">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#009C3B]"></div>
@@ -243,8 +219,10 @@ export default function Map() {
               </button>
             </div>
           )}
-        </main>
+        </div>
       )}
-    </div>
+    </>
   )
+
+  return <Layout>{content}</Layout>
 }
